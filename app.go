@@ -2,37 +2,43 @@ package main
 
 import "fmt"
 
-// This is a simple Go program that prints "Hello World" to the console.
+const (
+	Monday    = 0
+	Tuesday   = 1
+	Wednesday = 2
+	Thursday  = 3
+	Friday    = 4
+	Saturday  = 5
+	Sunday    = 6
+)
+
+const (
+	Admin      = 10
+	Manager    = 20
+	Contractor = 30
+	Member     = 40
+	Guest      = 50
+)
+
+func accessDenied() {
+	fmt.Println("Access Denied")
+}
+
+func accessGranted() {
+	fmt.Println("Access Granted")
+}
+
 func main() {
-	var favColor = `Green`
-
-	fmt.Println(favColor)
-
-	birthYear, age := 1996, 29
-
-	fmt.Println(birthYear, age)
-	var (
-		firstInitial = `d`
-		lastInitial  = `k`
-	)
-
-	fmt.Println(firstInitial, lastInitial)
-
-	var ageDays int
-
-	ageDays = multiplyAge(365, age)
-
-	fmt.Println(ageDays)
-
-	a, b, c := multiReturn()
-
-	fmt.Println(a, b, c)
-}
-
-func multiplyAge(firstValue, secondValue int) int {
-	return firstValue * secondValue
-}
-
-func multiReturn() (int, int, int) {
-	return 1, 2, 3
+	today, role := Tuesday, Guest
+	if role == Admin || role == Manager {
+		accessGranted()
+	} else if role == Contractor && (today == Saturday || today == Sunday) {
+		accessGranted()
+	} else if role == Member && !(today == Saturday || today == Sunday) {
+		accessGranted()
+	} else if role == Guest && (today == Monday || today == Wednesday || today == Friday) {
+		accessGranted()
+	} else {
+		accessDenied()
+	}
 }
