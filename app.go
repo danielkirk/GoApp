@@ -1,44 +1,38 @@
 package main
 
-import "fmt"
-
-const (
-	Monday    = 0
-	Tuesday   = 1
-	Wednesday = 2
-	Thursday  = 3
-	Friday    = 4
-	Saturday  = 5
-	Sunday    = 6
+import (
+	"fmt"
+	"math/rand"
+	"time"
 )
 
-const (
-	Admin      = 10
-	Manager    = 20
-	Contractor = 30
-	Member     = 40
-	Guest      = 50
-)
-
-func accessDenied() {
-	fmt.Println("Access Denied")
-}
-
-func accessGranted() {
-	fmt.Println("Access Granted")
+func roll(sides int) int {
+	return rand.Intn(sides) + 1
 }
 
 func main() {
-	today, role := Tuesday, Guest
-	if role == Admin || role == Manager {
-		accessGranted()
-	} else if role == Contractor && (today == Saturday || today == Sunday) {
-		accessGranted()
-	} else if role == Member && !(today == Saturday || today == Sunday) {
-		accessGranted()
-	} else if role == Guest && (today == Monday || today == Wednesday || today == Friday) {
-		accessGranted()
-	} else {
-		accessDenied()
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	const (
+		diceSides = 12
+		diceRolls = 2
+		dice      = 4
+	)
+
+	for r := 1; r <= diceRolls; r++ {
+		sum := 0
+		for d := 1; d <= dice; d++ {
+			rolled := roll(diceSides)
+			sum += rolled
+			fmt.Println("Roll #", r, ", die #", d, ":", rolled)
+		}
+
+		fmt.Println("Total Rolled", sum)
+		switch sum := sum; {
+		case sum == 2 && dice == 2:
+			fmt.Println("Snake Eyes")
+		case sum == 7:
+			fmt.Println("Lucky Seven!")
+		}
 	}
 }
