@@ -1,38 +1,30 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-	"time"
-)
+type Rectangle struct {
+	height int
+	width  int
+}
 
-func roll(sides int) int {
-	return rand.Intn(sides) + 1
+func calculateArea(rect Rectangle) int {
+	return rect.height * rect.width
+}
+
+func calculateParameter(rect Rectangle) int {
+	return (rect.height * 2) + (rect.width * 2)
+}
+
+func printInfo(rect Rectangle) {
+	println("Area is ", calculateArea(rect))
+	println("Parameter is ", calculateParameter(rect))
 }
 
 func main() {
-	rand.New(rand.NewSource(time.Now().UnixNano()))
+	rect := Rectangle{2, 4}
 
-	const (
-		diceSides = 12
-		diceRolls = 2
-		dice      = 4
-	)
+	printInfo(rect)
 
-	for r := 1; r <= diceRolls; r++ {
-		sum := 0
-		for d := 1; d <= dice; d++ {
-			rolled := roll(diceSides)
-			sum += rolled
-			fmt.Println("Roll #", r, ", die #", d, ":", rolled)
-		}
+	rect.height *= 2
+	rect.height *= 2
 
-		fmt.Println("Total Rolled", sum)
-		switch sum := sum; {
-		case sum == 2 && dice == 2:
-			fmt.Println("Snake Eyes")
-		case sum == 7:
-			fmt.Println("Lucky Seven!")
-		}
-	}
+	printInfo(rect)
 }
