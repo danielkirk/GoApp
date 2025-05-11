@@ -1,30 +1,41 @@
 package main
 
-type Rectangle struct {
-	height int
-	width  int
+type Product struct {
+	price int
+	name  string
 }
 
-func calculateArea(rect Rectangle) int {
-	return rect.height * rect.width
+func sum(products [4]Product) int {
+	total := 0
+	for i := range products {
+		total += products[i].price
+	}
+	return total
 }
 
-func calculateParameter(rect Rectangle) int {
-	return (rect.height * 2) + (rect.width * 2)
-}
+func printStats(products [4]Product) {
+	var cost, totalItems int
 
-func printInfo(rect Rectangle) {
-	println("Area is ", calculateArea(rect))
-	println("Parameter is ", calculateParameter(rect))
-}
+	for i := range products {
+		cost += products[i].price
+		if products[i].name != "" {
+			totalItems++
+		}
+	}
 
+	println(cost)
+	println(totalItems)
+	println(products[totalItems-1].name)
+
+}
 func main() {
-	rect := Rectangle{2, 4}
 
-	printInfo(rect)
+	shoppingList := [4]Product{{12, "bacon"}, {30, "eggs"}, {4, "cheese"}}
 
-	rect.height *= 2
-	rect.height *= 2
+	printStats(shoppingList)
 
-	printInfo(rect)
+	shoppingList[3] = Product{5, "meal"}
+
+	printStats(shoppingList)
+
 }
