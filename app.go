@@ -5,7 +5,7 @@ type Product struct {
 	name  string
 }
 
-func sum(products [4]Product) int {
+func sum(products []Product) int {
 	total := 0
 	for i := range products {
 		total += products[i].price
@@ -13,7 +13,7 @@ func sum(products [4]Product) int {
 	return total
 }
 
-func printStats(products [4]Product) {
+func printStats(products []Product) {
 	var cost, totalItems int
 
 	for i := range products {
@@ -30,11 +30,11 @@ func printStats(products [4]Product) {
 }
 func main() {
 
-	shoppingList := [4]Product{{12, "bacon"}, {30, "eggs"}, {4, "cheese"}}
+	shoppingList := []Product{{12, "bacon"}, {30, "eggs"}, {4, "cheese"}}
 
 	printStats(shoppingList)
 
-	shoppingList[3] = Product{5, "meal"}
+	shoppingList = append(shoppingList, Product{5, "meal"})
 
 	printStats(shoppingList)
 
