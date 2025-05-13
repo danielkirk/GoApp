@@ -2,64 +2,27 @@ package main
 
 import "fmt"
 
-type Product struct {
-	price int
-	name  string
-}
+type Part string
 
-func sum(products []Product) int {
-	total := 0
-	for i := range products {
-		total += products[i].price
-	}
-	return total
-}
-
-func printStats(products []Product) {
-	var cost, totalItems int
-
-	for i := range products {
-		cost += products[i].price
-		if products[i].name != "" {
-			totalItems++
-		}
+func printParts(parts []Part) {
+	var partsList string = "these parts"
+	for i := 0; i < len(parts); i++ {
+		partsList += ` ` + string(parts[i])
 	}
 
-	println(cost)
-	println(totalItems)
-	println(products[totalItems-1].name)
-	println(len(products), cap(products))
-
+	fmt.Println(partsList)
 }
+
 func main() {
+	assemblyLine := []Part{"wrench", "screwdriver", "hammer"}
 
-	shoppingList := []Product{{12, "bacon"}, {30, "eggs"}, {4, "cheese"}, {5, "meal"}}
-	newList := []Product{}
+	printParts(assemblyLine)
 
-	//omits the first index item and returns the rest
-	printStats(shoppingList[1:])
+	assemblyLine = append(assemblyLine, "nailgun", "pipe")
 
-	newList = append(newList, shoppingList...)
+	printParts(assemblyLine)
 
-	//omits the first two indexed items and returns the rest
-	printStats(newList)
-	newList = append(newList, shoppingList...)
-	//returns the entire array
-	printStats(newList)
-	newList = append(newList, shoppingList...)
-	//returns the entire array without explicitly stating it
-	printStats(newList)
+	assemblyLine = assemblyLine[3:]
 
-	//since I know the array will be 4 I can preallocate the slice.
-	preAllocatedSlice := make([]Product, 0, len(shoppingList)*4)
-	preAllocatedSlice = append(preAllocatedSlice, shoppingList...)
-	fmt.Printf("d: %p, len: %d, cap: %d\n", preAllocatedSlice, len(preAllocatedSlice), cap(preAllocatedSlice))
-
-	preAllocatedSlice = append(preAllocatedSlice, shoppingList...)
-	fmt.Printf("d: %p, len: %d, cap: %d\n", preAllocatedSlice, len(preAllocatedSlice), cap(preAllocatedSlice))
-	preAllocatedSlice = append(preAllocatedSlice, shoppingList...)
-	fmt.Printf("d: %p, len: %d, cap: %d\n", preAllocatedSlice, len(preAllocatedSlice), cap(preAllocatedSlice))
-	preAllocatedSlice = append(preAllocatedSlice, shoppingList...)
-	fmt.Printf("d: %p, len: %d, cap: %d\n", preAllocatedSlice, len(preAllocatedSlice), cap(preAllocatedSlice))
-
+	printParts(assemblyLine)
 }
