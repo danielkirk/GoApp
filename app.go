@@ -2,34 +2,21 @@ package main
 
 import "fmt"
 
+const (
+	Online      = 0
+	Offline     = 1
+	Maintenance = 2
+	Retired     = 3
+)
+
 func main() {
-	myMap := make(map[string]int)
+	serverList := []string{"darkstar", "aiur", "omicron", "w359", "base"}
 
-	myMap["this thang"] = 1
-	myMap["that thang"] = 2
-	myMap["them thangs"] = 3
+	serverStatus := make(map[string]int)
 
-	price, found := myMap["this thang"]
-	if !found {
-		fmt.Println("price not found")
-	} else {
-		fmt.Println(price)
+	for _, server := range serverList {
+		serverStatus[server] = Online
 	}
 
-	for key, value := range myMap {
-		fmt.Println(key, value)
-	}
-
-	delete(myMap, "this thang")
-
-	newPrice, newFound := myMap["this thang"]
-	if !newFound {
-		fmt.Println("price not found")
-	} else {
-		fmt.Println(newPrice)
-	}
-
-	for key, value := range myMap {
-		fmt.Println(key, value)
-	}
+	fmt.Println(serverStatus)
 }
