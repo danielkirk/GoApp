@@ -2,27 +2,18 @@ package main
 
 import "fmt"
 
-const (
-	Online      = 0
-	Offline     = 1
-	Maintenance = 2
-	Retired     = 3
-)
+func increment(x *int) {
+	*x += 1
+	fmt.Println(*x)
+}
 
 func main() {
-	serverList := []string{"darkstar", "aiur", "omicron", "w359", "base"}
+	value := 10
+	valuePtr := &value
+	increment(valuePtr)
+	increment(valuePtr)
+	fmt.Println(value)
 
-	serverStatus := make(map[string]int)
-
-	for _, server := range serverList {
-		serverStatus[server] = Online
-	}
-
-	fmt.Println(serverStatus)
-
-	serverStatus["darkstar"] = Maintenance
-
-	serverStatus["base"] = Retired
-
-	fmt.Println(serverStatus)
+	i := 1
+	increment(&i)
 }
