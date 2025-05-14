@@ -2,18 +2,33 @@ package main
 
 import "fmt"
 
-func increment(x *int) {
-	*x += 1
-	fmt.Println(*x)
+type Counter struct {
+	hits int
+}
+
+func increment(counter *Counter) {
+	counter.hits += 1
+	fmt.Println("Counter", counter)
+}
+
+func replace(old *string, new string, counter *Counter) {
+	*old = new
+	increment(counter)
 }
 
 func main() {
-	value := 10
-	valuePtr := &value
-	increment(valuePtr)
-	increment(valuePtr)
-	fmt.Println(value)
+	counter := Counter{}
 
-	i := 1
-	increment(&i)
+	hello := "Hello"
+	world := "World!"
+	fmt.Println(hello, world)
+
+	replace(&hello, "Hi", &counter)
+	fmt.Println(hello, world)
+
+	phrase := []string{hello, world}
+	fmt.Println(phrase)
+
+	replace(&phrase[1], "Go!", &counter)
+	fmt.Println(phrase)
 }
