@@ -19,4 +19,10 @@ func main() {
 	}
 
 	fmt.Println(serverStatus)
+
+	serverStatus["darkstar"] = Maintenance
+
+	serverStatus["base"] = Retired
+
+	fmt.Println(serverStatus)
 }
