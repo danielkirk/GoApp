@@ -2,33 +2,43 @@ package main
 
 import "fmt"
 
-type Counter struct {
-	hits int
+const (
+	active   = true
+	inactive = false
+)
+
+type Security struct {
+	items map[string]bool
 }
 
-func increment(counter *Counter) {
-	counter.hits += 1
-	fmt.Println("Counter", counter)
+func activate(security *Security, key string) {
+	security.items[key] = active
 }
 
-func replace(old *string, new string, counter *Counter) {
-	*old = new
-	increment(counter)
+func deactivate(security *Security, key string) {
+	security.items[key] = inactive
+}
+
+func checkout(security *Security) {
+	for key := range security.items {
+		deactivate(security, key)
+	}
+	fmt.Println(security.items)
 }
 
 func main() {
-	counter := Counter{}
+	security := Security{make(map[string]bool)}
+	security.items["Web"] = active
+	security.items["Desktop"] = active
+	security.items["Tabket"] = active
+	security.items["Laptop"] = active
 
-	hello := "Hello"
-	world := "World!"
-	fmt.Println(hello, world)
+	fmt.Println(security.items)
+	deactivate(&security, "Laptop")
 
-	replace(&hello, "Hi", &counter)
-	fmt.Println(hello, world)
+	fmt.Println(security.items)
+	activate(&security, "Laptop")
 
-	phrase := []string{hello, world}
-	fmt.Println(phrase)
-
-	replace(&phrase[1], "Go!", &counter)
-	fmt.Println(phrase)
+	fmt.Println(security.items)
+	checkout(&security)
 }
