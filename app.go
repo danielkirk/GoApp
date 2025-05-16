@@ -34,11 +34,13 @@ func main() {
 	security.items["Laptop"] = active
 
 	fmt.Println(security.items)
-	deactivate(&security, "Laptop")
 
-	fmt.Println(security.items)
-	activate(&security, "Laptop")
+	secPtr := &security
+	fmt.Printf("security address: %p, secPtr address: %p\n", &security, secPtr)
 
+	deactivate(secPtr, "Laptop")
 	fmt.Println(security.items)
-	checkout(&security)
+	activate(secPtr, "Laptop")
+	fmt.Println(security.items)
+	checkout(secPtr)
 }
