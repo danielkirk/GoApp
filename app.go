@@ -2,34 +2,34 @@ package main
 
 import "fmt"
 
-type Coordinate struct {
-	X, Y int
+type Space struct {
+	occupied bool
 }
 
-func shiftBy(x, y int, coord *Coordinate) {
-	coord.X += x
-	coord.Y += y
+type ParkingLot struct {
+	spaces []Space
 }
 
-func (coord *Coordinate) shiftBy(x, y int) {
-	coord.X += x
-	coord.Y += y
+func occupySpace(lot *ParkingLot, spaceNum int) {
+	lot.spaces[spaceNum-1].occupied = true
 }
 
-func (c Coordinate) shiftDist(other Coordinate) Coordinate {
-	return Coordinate{other.X - c.X, other.Y - c.Y}
+func (lot *ParkingLot) occupySpace(spaceNum int) {
+	lot.spaces[spaceNum-1].occupied = true
+}
+
+func (lot *ParkingLot) vacateSpace(spaceNum int) {
+	lot.spaces[spaceNum-1].occupied = false
 }
 
 func main() {
-	coord := Coordinate{5, 5}
-	fmt.Println(coord.X, coord.Y)
-	shiftBy(2, 3, &coord)
-	fmt.Println(coord.X, coord.Y)
-	coord.shiftBy(1, 2)
-	fmt.Println(coord.X, coord.Y)
+	currentLot := ParkingLot{make([]Space, 10)}
+	fmt.Println(currentLot)
+	currentLot.occupySpace(1)
+	fmt.Println(currentLot)
 
-	first := Coordinate{12, 23}
-	second := Coordinate{1, 24}
-	distance := first.shiftDist(second)
-	fmt.Println(distance)
+	occupySpace(&currentLot, 4)
+	fmt.Println(currentLot)
+	currentLot.vacateSpace(1)
+	fmt.Println(currentLot)
 }
