@@ -2,45 +2,34 @@ package main
 
 import "fmt"
 
-const (
-	active   = true
-	inactive = false
-)
-
-type Security struct {
-	items map[string]bool
+type Coordinate struct {
+	X, Y int
 }
 
-func activate(security *Security, key string) {
-	security.items[key] = active
+func shiftBy(x, y int, coord *Coordinate) {
+	coord.X += x
+	coord.Y += y
 }
 
-func deactivate(security *Security, key string) {
-	security.items[key] = inactive
+func (coord *Coordinate) shiftBy(x, y int) {
+	coord.X += x
+	coord.Y += y
 }
 
-func checkout(security *Security) {
-	for key := range security.items {
-		deactivate(security, key)
-	}
-	fmt.Println(security.items)
+func (c Coordinate) shiftDist(other Coordinate) Coordinate {
+	return Coordinate{other.X - c.X, other.Y - c.Y}
 }
 
 func main() {
-	security := Security{make(map[string]bool)}
-	security.items["Web"] = active
-	security.items["Desktop"] = active
-	security.items["Tabket"] = active
-	security.items["Laptop"] = active
+	coord := Coordinate{5, 5}
+	fmt.Println(coord.X, coord.Y)
+	shiftBy(2, 3, &coord)
+	fmt.Println(coord.X, coord.Y)
+	coord.shiftBy(1, 2)
+	fmt.Println(coord.X, coord.Y)
 
-	fmt.Println(security.items)
-
-	secPtr := &security
-	fmt.Printf("security address: %p, secPtr address: %p\n", &security, secPtr)
-
-	deactivate(secPtr, "Laptop")
-	fmt.Println(security.items)
-	activate(secPtr, "Laptop")
-	fmt.Println(security.items)
-	checkout(secPtr)
+	first := Coordinate{12, 23}
+	second := Coordinate{1, 24}
+	distance := first.shiftDist(second)
+	fmt.Println(distance)
 }
